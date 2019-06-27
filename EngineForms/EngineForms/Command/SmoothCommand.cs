@@ -36,7 +36,7 @@ namespace EngineForms.Command
 
         public override void OnClick()
         {          
-            SmoothOffset mOffset = new SmoothOffset(mLayer);
+            SmoothOffset mOffset = new SmoothOffset(mLayer,pMapControl);
             mOffset.Show(pMapControl);
         }
     }

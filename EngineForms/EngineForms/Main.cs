@@ -231,72 +231,7 @@ namespace EngineForms
 
             return pWks;
         }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            if (mEngineEditor.EditState == esriEngineEditState.esriEngineStateNotEditing)
-            {
-                AxMapControl mMap =this.axMapControl1;
-                currentLayer = GetTocSelectedLayer();
-                if (currentLayer is IFeatureLayer)
-                {
-                    IFeatureLayer featureLayer = currentLayer as IFeatureLayer;
-                    mLayerType = featureLayer.FeatureClass.ShapeType;
-
-                    IDataset dataset = featureLayer.FeatureClass as IDataset;
-
-
-
-                    IVersionedObject verObj = dataset as IVersionedObject;
-                    if (verObj != null)
-                    {
-                        try
-                        {
-                            verObj.RegisterAsVersioned(true);
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
-
-                    }
-                    //if (verObj != null)
-                    //{
-
-                    //    MessageBox.Show("数据集未注册为版本！");
-                    //    return;
-                    //}
-                    IWorkspace workspace;
-                    try
-                    {
-                        mEngineEditor.EditSessionMode = esriEngineEditSessionMode.esriEngineEditSessionModeVersioned;
-
-
-                        workspace = dataset.Workspace;
-                        mEngineEditor.StartEditing(workspace, mMap.Map);
-                    }
-                    catch (Exception ex)
-                    {
-                        try
-                        {
-                            mEngineEditor.EditSessionMode = esriEngineEditSessionMode.esriEngineEditSessionModeNonVersioned;
-
-
-                            workspace = dataset.Workspace;
-                            mEngineEditor.StartEditing(workspace, mMap.Map);
-                        }
-                        catch (Exception ex1)
-                        {
-                            XtraMessageBox.Show(ex1.Message, "提示信息", MessageBoxButtons.OK);
-                        }
-
-                    }
-
-                    ((IEngineEditLayers)mEngineEditor).SetTargetLayer(featureLayer, 0);
-
-                }
-            }
-        }
+       
 
         /// <summary>
         /// 获取图层控制控件中选中的图层
@@ -321,20 +256,7 @@ namespace EngineForms
             }
         }
 
-        private void button7_Click(object sender, EventArgs e)
-        {
-            if (mEngineEditor.HasEdits())
-            {
-                mEngineEditor.StopEditing(true);
-            }
-            else
-            {
-                mEngineEditor.StopEditing(false);
-            }
-            this.axMapControl1.MousePointer = esriControlsMousePointer.esriPointerDefault;
-
-            this.axMapControl1.Refresh();
-        }
+      
 
         private void 打开属性表ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -418,10 +340,6 @@ namespace EngineForms
 
         private void button10_Click(object sender, EventArgs e)
         {
-
-       
-
-
             bool b = isSelect();
             if (b)
             {
@@ -546,9 +464,84 @@ namespace EngineForms
 
         private void simpleButton3_Click(object sender, EventArgs e)
         {
-            XtraForm1 mXtraForm1 = new XtraForm1();
-            mXtraForm1.Show(axMapControl1);
-            
+            if (mEngineEditor.EditState == esriEngineEditState.esriEngineStateNotEditing)
+            {
+                AxMapControl mMap = this.axMapControl1;
+                currentLayer = GetTocSelectedLayer();
+                if (currentLayer is IFeatureLayer)
+                {
+                    IFeatureLayer featureLayer = currentLayer as IFeatureLayer;
+                    mLayerType = featureLayer.FeatureClass.ShapeType;
+
+                    IDataset dataset = featureLayer.FeatureClass as IDataset;
+
+
+
+                    IVersionedObject verObj = dataset as IVersionedObject;
+                    if (verObj != null)
+                    {
+                        try
+                        {
+                            verObj.RegisterAsVersioned(true);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+
+                    }
+                    //if (verObj != null)
+                    //{
+
+                    //    MessageBox.Show("数据集未注册为版本！");
+                    //    return;
+                    //}
+                    IWorkspace workspace;
+                    try
+                    {
+                        mEngineEditor.EditSessionMode = esriEngineEditSessionMode.esriEngineEditSessionModeVersioned;
+
+
+                        workspace = dataset.Workspace;
+                        mEngineEditor.StartEditing(workspace, mMap.Map);
+                    }
+                    catch (Exception ex)
+                    {
+                        try
+                        {
+                            mEngineEditor.EditSessionMode = esriEngineEditSessionMode.esriEngineEditSessionModeNonVersioned;
+
+
+                            workspace = dataset.Workspace;
+                            mEngineEditor.StartEditing(workspace, mMap.Map);
+                        }
+                        catch (Exception ex1)
+                        {
+                            XtraMessageBox.Show(ex1.Message, "提示信息", MessageBoxButtons.OK);
+                        }
+
+                    }
+
+                    ((IEngineEditLayers)mEngineEditor).SetTargetLayer(featureLayer, 0);
+
+                }
+            }
+
+        }
+
+        private void simpleButton4_Click(object sender, EventArgs e)
+        {
+            if (mEngineEditor.HasEdits())
+            {
+                mEngineEditor.StopEditing(true);
+            }
+            else
+            {
+                mEngineEditor.StopEditing(false);
+            }
+            this.axMapControl1.MousePointer = esriControlsMousePointer.esriPointerDefault;
+
+            this.axMapControl1.Refresh();
         }
     }
 }

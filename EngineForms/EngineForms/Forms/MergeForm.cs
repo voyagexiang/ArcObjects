@@ -49,15 +49,24 @@ namespace EngineForms
 
 
                 // 要素游标
+
+                //启动编辑
                 IFeatureLayer pFeatureLayer = mLayer as IFeatureLayer;
                 IFeatureClass pFeatureClass = pFeatureLayer.FeatureClass;
 
-                IWorkspace workspace = pFeatureClass.FeatureDataset.Workspace;
+                IWorkspace workspace = null;
                 IEngineEditor mEngineEditor = mEngineEditor = new EngineEditorClass();
-                mEngineEditor.EditSessionMode = esriEngineEditSessionMode.esriEngineEditSessionModeVersioned;
-                mEngineEditor.StartEditing(workspace, mAxMapControl1.Map);
-                ((IEngineEditLayers)mEngineEditor).SetTargetLayer(pFeatureLayer, -1);
-                mEngineEditor.StartOperation();
+                if (pFeatureClass.FeatureDataset != null)
+                {
+
+                    workspace = pFeatureClass.FeatureDataset.Workspace;
+                    IMap mMap = mAxMapControl1.Map;
+                    mEngineEditor.EditSessionMode = esriEngineEditSessionMode.esriEngineEditSessionModeVersioned;
+                    mEngineEditor.StartEditing(workspace, mMap);
+                    ((IEngineEditLayers)mEngineEditor).SetTargetLayer(pFeatureLayer, -1);
+                    mEngineEditor.StartOperation();
+
+                }
 
 
 
@@ -79,7 +88,11 @@ namespace EngineForms
 
 
                 this.Close();
-                mEngineEditor.StopEditing(true);
+                if (workspace != null)
+                {
+                    mEngineEditor.StopEditing(true);
+                }
+
                 XtraMessageBox.Show("合并成功", "提示信息", MessageBoxButtons.OK);
                 mAxMapControl1.Refresh();
             }

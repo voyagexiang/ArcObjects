@@ -40,8 +40,6 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.打开属性表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button8 = new System.Windows.Forms.Button();
@@ -53,6 +51,7 @@
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
+            this.simpleButton4 = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.axLicenseControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axMapControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axMapControl2)).BeginInit();
@@ -152,26 +151,6 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(540, 13);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(87, 27);
-            this.button6.TabIndex = 13;
-            this.button6.Text = "启动编辑";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
-            // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(635, 13);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(87, 27);
-            this.button7.TabIndex = 14;
-            this.button7.Text = "保存编辑";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
-            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -188,7 +167,7 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(729, 14);
+            this.button8.Location = new System.Drawing.Point(635, 14);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(87, 27);
             this.button8.TabIndex = 15;
@@ -198,7 +177,7 @@
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(825, 14);
+            this.button9.Location = new System.Drawing.Point(728, 14);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(87, 27);
             this.button9.TabIndex = 16;
@@ -228,7 +207,7 @@
             // 
             // axToolbarControl1
             // 
-            this.axToolbarControl1.Location = new System.Drawing.Point(303, 44);
+            this.axToolbarControl1.Location = new System.Drawing.Point(351, 47);
             this.axToolbarControl1.Name = "axToolbarControl1";
             this.axToolbarControl1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axToolbarControl1.OcxState")));
             this.axToolbarControl1.Size = new System.Drawing.Size(265, 28);
@@ -264,18 +243,28 @@
             // 
             // simpleButton3
             // 
-            this.simpleButton3.Location = new System.Drawing.Point(937, 15);
+            this.simpleButton3.Location = new System.Drawing.Point(542, 11);
             this.simpleButton3.Name = "simpleButton3";
             this.simpleButton3.Size = new System.Drawing.Size(87, 27);
             this.simpleButton3.TabIndex = 24;
-            this.simpleButton3.Text = "simpleButton3";
+            this.simpleButton3.Text = "启动编辑";
             this.simpleButton3.Click += new System.EventHandler(this.simpleButton3_Click);
+            // 
+            // simpleButton4
+            // 
+            this.simpleButton4.Location = new System.Drawing.Point(821, 15);
+            this.simpleButton4.Name = "simpleButton4";
+            this.simpleButton4.Size = new System.Drawing.Size(75, 23);
+            this.simpleButton4.TabIndex = 25;
+            this.simpleButton4.Text = "保存编辑";
+            this.simpleButton4.Click += new System.EventHandler(this.simpleButton4_Click);
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1051, 593);
+            this.Controls.Add(this.simpleButton4);
             this.Controls.Add(this.simpleButton3);
             this.Controls.Add(this.simpleButton2);
             this.Controls.Add(this.simpleButton1);
@@ -285,8 +274,6 @@
             this.Controls.Add(this.button10);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.button8);
-            this.Controls.Add(this.button7);
-            this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -321,8 +308,6 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button7;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 打开属性表ToolStripMenuItem;
         private System.Windows.Forms.Button button8;
@@ -334,6 +319,7 @@
         private DevExpress.XtraEditors.SimpleButton simpleButton1;
         private DevExpress.XtraEditors.SimpleButton simpleButton2;
         private DevExpress.XtraEditors.SimpleButton simpleButton3;
+        private DevExpress.XtraEditors.SimpleButton simpleButton4;
     }
 }
 

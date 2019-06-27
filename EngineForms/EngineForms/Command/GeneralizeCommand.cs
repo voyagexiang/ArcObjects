@@ -21,7 +21,7 @@ namespace EngineForms.Command
 
         public override void OnClick()
         {      
-            offset mOffset = new offset(mLayer);
+            offset mOffset = new offset(mLayer,pMapControl);
             mOffset.Show(pMapControl);
         }
 

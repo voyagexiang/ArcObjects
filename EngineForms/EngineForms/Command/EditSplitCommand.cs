@@ -52,7 +52,7 @@ namespace EngineForms.Command
 
                 return;
 
-
+            IWorkspace workspace = null;
 
             #region……分割面
 
@@ -94,20 +94,29 @@ namespace EngineForms.Command
 
                 pTopoOpo.Simplify();//确保几何体的拓扑正确
 
-                IFeatureLayer featureLayer = mLayer as IFeatureLayer;
-                IFeatureClass featureClass = featureLayer.FeatureClass;
-                IDataset dataset = featureClass as IDataset;
-                IWorkspace workspace = dataset.Workspace;
-                mEngineEditor.EditSessionMode = esriEngineEditSessionMode.esriEngineEditSessionModeVersioned;
-                mEngineEditor.StartEditing(workspace, mMap);
-                ((IEngineEditLayers)mEngineEditor).SetTargetLayer(featureLayer, 0);
+                //开始编辑
 
-                //mEngineEditor.StartOperation();
+                IFeatureLayer featureLayer = mLayer as IFeatureLayer;
+                IFeatureClass pFeatureClass = featureLayer.FeatureClass;
+
+               
+                IEngineEditor mEngineEditor = mEngineEditor = new EngineEditorClass();
+                if (pFeatureClass.FeatureDataset != null)
+                {
+                    workspace = pFeatureClass.FeatureDataset.Workspace;
+                    mEngineEditor.EditSessionMode = esriEngineEditSessionMode.esriEngineEditSessionModeVersioned;
+                    mEngineEditor.StartEditing(workspace, mMap);
+                    ((IEngineEditLayers)mEngineEditor).SetTargetLayer(featureLayer, -1);
+                    mEngineEditor.StartOperation();
+                }          
+
+                
+
 
                 //分割方法               
 
 
-                SplitPolygon(featureClass, pPolyline);
+                SplitPolygon(pFeatureClass, pPolyline);
 
                 ReBackStates();//刷新返回修改工具
 
@@ -155,14 +164,19 @@ namespace EngineForms.Command
                 // mEngineEditor.StartOperation();//开启编辑
 
                 IFeatureLayer featureLayer = mLayer as IFeatureLayer;
-                IFeatureClass featureClass = featureLayer.FeatureClass;
-                IDataset dataset = featureClass as IDataset;
-                IWorkspace workspace = dataset.Workspace;
-                mEngineEditor.EditSessionMode = esriEngineEditSessionMode.esriEngineEditSessionModeVersioned;
-                mEngineEditor.StartEditing(workspace, mMap);
-                ((IEngineEditLayers)mEngineEditor).SetTargetLayer(featureLayer, 0);
+                IFeatureClass pFeatureClass = featureLayer.FeatureClass;
+                
+                IEngineEditor mEngineEditor = mEngineEditor = new EngineEditorClass();
+                if (pFeatureClass.FeatureDataset != null)
+                {
+                    workspace = pFeatureClass.FeatureDataset.Workspace;
+                    mEngineEditor.EditSessionMode = esriEngineEditSessionMode.esriEngineEditSessionModeVersioned;
+                    mEngineEditor.StartEditing(workspace, mMap);
+                    ((IEngineEditLayers)mEngineEditor).SetTargetLayer(featureLayer, -1);
+                    mEngineEditor.StartOperation();
+                }
 
-                ISelectionSet pSelectionSet = featureClass.Select(null, esriSelectionType.esriSelectionTypeIDSet, esriSelectionOption.esriSelectionOptionNormal, workspace);
+                ISelectionSet pSelectionSet = pFeatureClass.Select(null, esriSelectionType.esriSelectionTypeIDSet, esriSelectionOption.esriSelectionOptionNormal, workspace);
 
                 //分割方法
 
@@ -177,8 +191,11 @@ namespace EngineForms.Command
             }
 
             #endregion
+            if (workspace != null)
+            {
+                mEngineEditor.StopEditing(true);
+            }
 
-            mEngineEditor.StopEditing(true);
             //mEngineEditor.StopOperation("ControlToolsEditing_CreateNewFeatureTask");
         }
 

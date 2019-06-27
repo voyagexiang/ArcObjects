@@ -1,5 +1,6 @@
 ﻿using DevExpress.XtraEditors;
 using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Controls;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using System;
@@ -17,14 +18,18 @@ namespace EngineForms
     public partial class offset : DevExpress.XtraEditors.XtraForm
     {
         ILayer mLayer;
+        AxMapControl axMapControl;
+        IMap mMap;
         public offset()
         {
             InitializeComponent();
         }
-        public offset(ILayer mLayer)
+        public offset(ILayer mLayer, AxMapControl axMapControl)
         {
             InitializeComponent();
             this.mLayer = mLayer;
+            this.axMapControl = axMapControl;
+            mMap = axMapControl.Map;
         }
 
         private void simpleButton1_Click(object sender, EventArgs e)
@@ -39,7 +44,25 @@ namespace EngineForms
                 XtraMessageBox.Show("请输入数值类型", "提示信息", MessageBoxButtons.OK);
                 return;
             }
-            try {
+            try
+            {
+                //启动编辑
+                IFeatureLayer featureLayer = mLayer as IFeatureLayer;
+                IFeatureClass pFeatureClass = featureLayer.FeatureClass;
+
+                IWorkspace workspace=null;
+                IEngineEditor mEngineEditor = mEngineEditor = new EngineEditorClass();
+                if (pFeatureClass.FeatureDataset != null)
+                {
+                    workspace = pFeatureClass.FeatureDataset.Workspace;
+                    mEngineEditor.EditSessionMode = esriEngineEditSessionMode.esriEngineEditSessionModeVersioned;
+                    mEngineEditor.StartEditing(workspace, mMap);
+                    ((IEngineEditLayers)mEngineEditor).SetTargetLayer(featureLayer, -1);
+                    mEngineEditor.StartOperation();
+                }
+
+
+
                 ISelectionSet mSelectionSet = (mLayer as IFeatureSelection).SelectionSet;
                 ICursor mCursor;
                 mSelectionSet.Search(null, false, out mCursor);
@@ -54,12 +77,19 @@ namespace EngineForms
                     mFeature.Store();
                     mFeature = mCursor.NextRow() as IFeature;
                 }
+                if (workspace != null)
+                {
+                    mEngineEditor.StopEditing(true);
+                }
+
                 this.Dispose();
-            } catch (Exception ex) {
-                XtraMessageBox.Show("简化失败","提示信息",MessageBoxButtons.OK);
             }
-           
-          
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show("简化失败", "提示信息", MessageBoxButtons.OK);
+            }
+
+
         }
 
         private void simpleButton2_Click(object sender, EventArgs e)
